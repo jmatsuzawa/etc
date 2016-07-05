@@ -1,0 +1,178 @@
+syntax on
+set number
+set cindent
+set autoindent
+set shiftwidth=4
+set tabstop=4
+set hlsearch
+set incsearch
+set nobackup
+set backspace=eol,indent,start
+set statusline=%<%f%h%m%r%=%c%V\ %l/%L\ 0x%B
+set showcmd
+"set cursorline
+"au WinEnter * setlocal cursorline
+"au WinLeave * setlocal nocursorline
+
+map  dwwP
+nnoremap Y y$
+nnoremap tn :tabnew 
+nnoremap tc :tabclose<CR>
+nnoremap tl :tabnext<CR>
+nnoremap th :tabprev<CR>
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
+nnoremap va `[v`]
+noremap mh `[
+noremap ml `]
+" nnoremap <C-h> :<C-u>help<Space>
+nnoremap <C-h> hx
+nnoremap <C-n> <C-e>
+nnoremap <C-p> <C-y>
+" nnoremap <CR><CR> o<ESC>
+nnoremap <Space><Space> i<Space><ESC>l
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+" inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-d> <Del>
+cnoremap <C-j> <CR>
+" map 11 i#!/bin/sh:set filetype=sh
+
+" set enc=utf-8
+" set fenc=utf-8
+" set fencs=iso-2022-jp,euc-jp,cp932
+
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | silent %!xxd -g 1
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | silent %!xxd -g 1
+  au BufWritePost *.bin set nomod | endif
+augroup END
+ 
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle 'yuratomo/w3m.vim'
+NeoBundle 'Conque-Shell'
+" NeoBundle 'tyru/skk.vim'
+NeoBundle 'jhradilek/vim-mallard'
+NeoBundle 'jhradilek/vim-snippets'
+
+filetype indent plugin on
+
+NeoBundleCheck
+
+" if &encoding !=# 'utf-8'
+"   set encoding=japan
+"   set fileencoding=japan
+" endif
+" if has('iconv')
+"   let s:enc_euc = 'euc-jp'
+"   let s:enc_jis = 'iso-2022-jp'
+" 
+"   if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+"     let s:enc_euc = 'eucjp-ms'
+"     let s:enc_jis = 'iso-2022-jp-3'
+" 
+"   elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+"     let s:enc_euc = 'euc-jisx0213'
+"     let s:enc_jis = 'iso-2022-jp-3'
+"   endif
+" 
+"   if &encoding ==# 'utf-8'
+"     let s:fileencodings_default = &fileencodings
+"     let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+"     let &fileencodings = &fileencodings .','. s:fileencodings_default
+"     unlet s:fileencodings_default
+"   else
+"     let &fileencodings = &fileencodings .','. s:enc_jis
+"     set fileencodings+=utf-8,ucs-2le,ucs-2
+"     if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+"       set fileencodings+=cp932
+"       set fileencodings-=euc-jp
+"       set fileencodings-=euc-jisx0213
+"       set fileencodings-=eucjp-ms
+"       let &encoding = s:enc_euc
+"       let &fileencoding = s:enc_euc
+"     else
+"       let &fileencodings = &fileencodings .','. s:enc_euc
+"     endif
+"   endif
+" 
+"   unlet s:enc_euc
+"   unlet s:enc_jis
+" endif
+" 
+" if has('autocmd')
+"   function! AU_ReCheck_FENC()
+"     if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+"       let &fileencoding=&encoding
+"     endif
+"   endfunction
+"   autocmd BufReadPost * call AU_ReCheck_FENC()
+" endif
+" 
+" set fileformats=unix,dos,mac
+" 
+" if exists('&ambiwidth')
+"   set ambiwidth=double
+" endif
+
+au FileType c source ${HOME}/.vim/after/ftplugin/c.vim
+au FileType cpp source ${HOME}/.vim/after/ftplugin/cpp.vim
+au FileType javascript source ${HOME}/.vim/after/ftplugin/javascript.vim
+au FileType php source ${HOME}/.vim/after/ftplugin/php.vim
+au FileType python source ${HOME}/.vim/after/ftplugin/python.vim
+au FileType ruby source ${HOME}/.vim/after/ftplugin/ruby.vim
+au FileType sh source ${HOME}/.vim/after/ftplugin/sh.vim
+au FileType smarty source ${HOME}/.vim/after/ftplugin/smarty.vim
+au FileType vim source ${HOME}/.vim/after/ftplugin/vim.vim
+au FileType xml source ${HOME}/.vim/after/ftplugin/xml.vim
+au FileType zsh source ${HOME}/.vim/after/ftplugin/zsh.vim
+
+
+" for Vundle
+" filetype off
+" set rtp+=~/.vim/bundle/vundle/
+" call vundle#rc()
+" Bundle 'gmarik/vundle'
+" Bundle 'tyru/skk.vim'
+" Bundle 'Shougo/vimshell'
+" Bundle 'Shougo/vimproc'
+" Bundle 'yuratomo/w3m.vim'
+" Bundle 'Tail-Bundle'
+" Bundle 'Conque-Shell'
+" filetype indent plugin on
+
+" for skk.vim
+" inoremap <C-k> <Plug>(skk-toggle-im)
+" nnoremap <C-k> i<Plug>(skk-toggle-im)
+" let g:skk_large_jisyo = '/usr/share/skk/SKK-JISYO.L'
+
+" for conque
+command! -nargs=+ -complete=shellcmd Term call conque_term#open(<q-args>)
+command! -nargs=+ -complete=shellcmd Terms call conque_term#open(<q-args>, ['belowright split'])
+command! -nargs=+ -complete=shellcmd Termv call conque_term#open(<q-args>, ['belowright vsplit'])
+command! -nargs=+ -complete=shellcmd Termt call conque_term#open(<q-args>, ['tabnew'])
+command! -complete=shellcmd Shell call conque_term#open('zsh')
+command! -complete=shellcmd Shells call conque_term#open('zsh', ['belowright split'])
+command! -complete=shellcmd Shellv call conque_term#open('zsh', ['belowright vsplit'])
+command! -complete=shellcmd Shellt call conque_term#open('zsh', ['tabnew'])

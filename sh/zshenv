@@ -1,0 +1,31 @@
+typeset -U path PATH
+SHRC_DIR=${HOME}/etc/sh
+export SHRC_DIR
+
+############################################################
+# common preferences independent of shells
+############################################################
+COMMON_RC=${SHRC_DIR}/common_rc.sh
+if [ -r "${COMMON_RC}" ]; then
+  . ${COMMON_RC}
+fi
+
+
+############################################################
+# preferences dependent on zsh
+############################################################
+export WORDCHAR='*?_-.[]~/&;!#$%^(){}<>'
+
+
+############################################################
+# customized preferences
+############################################################
+CUSTOM_COMMON_RC=${SHRC_DIR}/custom_common_rc.sh
+if [ -r "$CUSTOM_COMMON_RC" ]; then
+  . ${CUSTOM_COMMON_RC}
+fi
+
+############################################################
+# pythonbrew
+############################################################
+# [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
